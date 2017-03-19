@@ -8,15 +8,21 @@
 #include <linux/proc_fs.h>
 #include <asm/uaccess.h>
 
+MODULE_LICENSE("GPL");
+
 #define MAJOR_NUMBER 61
+
 
 /* forward declaration */
 int onebyte_open(struct inode *inode, struct file *filep);
 int onebyte_release(struct inode *inode, struct file *filep);
 ssize_t onebyte_read(struct file *filep, char *buf, size_t count, loff_t *f_pos);
 ssize_t onebyte_write(struct file *filep, const char *buf,size_t count, loff_t *f_pos);
+
 static void onebyte_exit(void);
+static int onebyte_init(void);
 /* definition of file_operation structure */
+
 struct file_operations onebyte_fops = {
 	read:	onebyte_read,
 	write:	onebyte_write,
@@ -24,6 +30,7 @@ struct file_operations onebyte_fops = {
 	release:onebyte_release
 };
 char *onebyte_data = NULL;
+
 int onebyte_open(struct inode *inode, struct file *filep)
 {
 	return 0; // always successful
@@ -35,10 +42,25 @@ int onebyte_release(struct inode *inode, struct file *filep)
 ssize_t onebyte_read(struct file *filep, char *buf, size_t count, loff_t *f_pos)
 {
 /*please complete the function on your own*/
+	copy_to_user(buf,onebyte_data,1);
+  /* Changing reading position as best suits */
+	if (*f_pos == 0) { 
+    	*f_pos+=1; 
+    	return 1; 
+  	} else { 
+    	return 0; 
+  	}	
 }
 ssize_t onebyte_write(struct file *filep, const char *buf, size_t count, loff_t *f_pos)
 {
 /*please complete the function on your own*/
+ 	char *tmp;
+	if (count > 1){
+		printk(KERN_ALERT "Write error: No space left on the device.\n");
+	}
+ 	tmp=buf;
+ 	copy_from_user(memory_buffer,tmp,1);
+  	return 1;
 }
 static int onebyte_init(void)
 {
@@ -53,16 +75,17 @@ static int onebyte_init(void)
 	// To release the memory allocated by kmalloc, use kfree.
 	onebyte_data = kmalloc(sizeof(char), GFP_KERNEL);
 	if (!onebyte_data) {
-	onebyte_exit();
-	// cannot allocate memory
-	// return no memory error, negative signify a failure
-	return -ENOMEM;
+		onebyte_exit();
+		// cannot allocate memory
+		// return no memory error, negative signify a failure
+		return -ENOMEM;
 	}
 	// initialize the value to be X
 	*onebyte_data = 'X';
 	printk(KERN_ALERT "This is a onebyte device module\n");
 	return 0;
 }
+
 static void onebyte_exit(void)
 {
 	// if the pointer is pointing to something
