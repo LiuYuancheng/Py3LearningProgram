@@ -17,7 +17,7 @@ MODULE_LICENSE("GPL");
 int onebyte_open(struct inode *inode, struct file *filep);
 int onebyte_release(struct inode *inode, struct file *filep);
 ssize_t onebyte_read(struct file *filep, char *buf, size_t count, loff_t *f_pos);
-ssize_t onebyte_write(struct file *filep, const char *buf,size_t count, loff_t *f_pos);
+ssize_t onebyte_write(struct file *filep,const char *buf,size_t count, loff_t *f_pos);
 
 static void onebyte_exit(void);
 static int onebyte_init(void);
@@ -53,14 +53,12 @@ ssize_t onebyte_read(struct file *filep, char *buf, size_t count, loff_t *f_pos)
 }
 ssize_t onebyte_write(struct file *filep, const char *buf, size_t count, loff_t *f_pos)
 {
-/*please complete the function on your own*/
- 	char *tmp;
-	if (count > 1){
-		printk(KERN_ALERT "Write error: No space left on the device.\n");
+ 	copy_from_user(onebyte_data,buf,1);
+	if (count >1){
+		printk(KERN_INFO "Write error: no space on device for: %s\n",buf);
+		return -ENOSPC;	
 	}
- 	tmp=buf;
- 	copy_from_user(memory_buffer,tmp,1);
-  	return 1;
+  	return count;
 }
 static int onebyte_init(void)
 {
@@ -101,6 +99,5 @@ static void onebyte_exit(void)
 MODULE_LICENSE("GPL");
 module_init(onebyte_init);
 module_exit(onebyte_exit);
-
 
 
