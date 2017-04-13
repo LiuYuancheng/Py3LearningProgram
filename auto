@@ -1,0 +1,6 @@
+#!/bin/bash
+
+make
+sudo rmmod lcd.ko
+sudo insmod lcd.ko
+
