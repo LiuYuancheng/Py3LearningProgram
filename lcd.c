@@ -14,13 +14,13 @@ struct dev_msg_t {
   char data[100];
 };
 
-#define MAJOR_NUMBER 67
+#define MAJOR_NUMBER 66
 #define DEV_SIZE 4 * 1024 * 1024
-#define LCD_IOC_TYPE 'k'
-#define LCD_IOC_HELLO _IO(LCD_IOC_TYPE, 1)
-#define LCD_IOC_WRITE _IOW(LCD_IOC_TYPE, 2, struct dev_msg_t)
-#define LCD_IOC_READ _IOR(LCD_IOC_TYPE, 3, struct dev_msg_t)
-#define LCD_IOC_WR _IOWR(LCD_IOC_TYPE, 4, struct dev_msg_t)
+#define LCD_IOC_MAGIC 'k'
+#define LCD_IOC_HELLO _IO(LCD_IOC_MAGIC, 1)
+#define LCD_IOC_WRITE _IOW(LCD_IOC_MAGIC, 2, struct dev_msg_t)
+#define LCD_IOC_READ _IOR(LCD_IOC_MAGIC, 3, struct dev_msg_t)
+#define LCD_IOC_WR _IOWR(LCD_IOC_MAGIC, 4, struct dev_msg_t)
 
 /* forward declaration */
 int lcd_open(struct inode *inode, struct file *filep);
@@ -59,10 +59,13 @@ long lcd_ioctl(struct file* filep, unsigned int cmd, unsigned long arg)
 {
   struct dev_msg_t* msg;
   struct dev_msg_t tmp;
-  if (_IOC_TYPE(cmd) != LCD_IOC_TYPE) return -ENOTTY;
+  int retval = 0;   
+
+  if (_IOC_TYPE(cmd) != LCD_IOC_MAGIC) return -ENOTTY;
+  //if (_IOC_NR(cmd) > LCD_IOC_MAGIC) return ‐ENOTTY; 
   switch (cmd) {
     case LCD_IOC_HELLO:
-      printk(KERN_WARNING "hello\n");
+      printk(KERN_WARNING "Hello.\n");
       break;
     case LCD_IOC_WRITE:
       msg = (struct dev_msg_t*) arg;
@@ -83,7 +86,7 @@ long lcd_ioctl(struct file* filep, unsigned int cmd, unsigned long arg)
     default:
       return -ENOTTY;
   }
-  return 0;
+  return retval;
 }
 
 loff_t lcd_llseek(struct file* filep, loff_t offset, int whence)
@@ -95,12 +98,12 @@ loff_t lcd_llseek(struct file* filep, loff_t offset, int whence)
       break;
     case 1: new_pos = filep->f_pos + offset;  // SEEK_CUR
       break;
-    case 2: new_pos = DEV_SIZE + offset;  // SEEK_END
+    case 2: new_pos = stored + offset;  // SEEK_END
       break;
     default: return -EINVAL;
   }
   if (new_pos < 0) return -EINVAL;
-  if (new_pos > DEV_SIZE) new_pos = DEV_SIZE;
+  if (new_pos > stored) new_pos = stored;
   filep->f_pos = new_pos;
   return new_pos;
 }
@@ -121,7 +124,7 @@ ssize_t lcd_write(struct file *filep, const char *buf, size_t count, loff_t *f_p
   copy_from_user(lcd_data + *f_pos, buf, count);
   *f_pos += count;
   stored = *f_pos;
-  if (stored == DEV_SIZE) return -ENOSPC;
+  if (stored == DEV_SIZE) return DEV_SIZE;
   return count;
   /*
   if (count > 1) {
@@ -135,7 +138,7 @@ static int lcd_init(void)
 {
   int result;
   // register the device
-  result = register_chrdev(MAJOR_NUMBER, "lcd", &lcd_fops);
+  result = register_chrdev(MAJOR_NUMBER, "bytes4m", &lcd_fops);
   if (result < 0) {
     return result;
   }
@@ -153,7 +156,7 @@ static int lcd_init(void)
   // initialize the value to be X
   *lcd_data = '\0';
   dev_msg.data[99] = '\0';
-  printk(KERN_ALERT "This is a lcd device module\n");
+  printk(KERN_ALERT "This is a 4m device module\n");
   return 0;
 }
 
@@ -167,11 +170,10 @@ static void lcd_exit(void)
   }
 
   // unregister the device
-  unregister_chrdev(MAJOR_NUMBER, "lcd");
-  printk(KERN_ALERT "lcd device module is unloaded\n");
+  unregister_chrdev(MAJOR_NUMBER, "bytes4m");
+  printk(KERN_ALERT "4m device is unloaded\n");
 }
 
 MODULE_LICENSE("GPL");
 module_init(lcd_init);
 module_exit(lcd_exit);
-
