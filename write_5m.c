@@ -4,16 +4,15 @@
 
 int main() {
   FILE* fp;
-  char data[5 * 1024 * 1024];
-  size_t written = 0;
-
-  memset(data, '0', sizeof(data));
+  char data[3 * 1024 * 1024];
+  size_t result = 0;
+  memset(data, '_', sizeof(data));
   data[0] = 'S';
-  data[-1]= 'e';
-  fp = fopen("/dev/onebyte4m", "wb");
-  written = fwrite(data, sizeof(char), sizeof(data)/sizeof(char), fp);
+  data[-1]= 'E';
+  fp = fopen("/dev/bytes4m", "wb");
+  result = fwrite(data, 1, 5 * 1024 * 1024, fp);
+  printf("result = %zu bytes\n", result);
+ 
   fclose(fp);
-  printf("%lu\n", written);
-
   return 1;
 }
