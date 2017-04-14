@@ -1,0 +1,15 @@
+#!/bin/bash
+
+gcc -o write_5m write_5m.c 
+
+./write_5m
+
+printf "\nHead 100 char of the 4m device\n"
+
+head -c 100 /dev/bytes4m
+
+printf "\nTail 100 char of the 4m device:\n"
+
+tail -c 100 /dev/bytes4m
+
+
