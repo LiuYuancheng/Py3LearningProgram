@@ -1,0 +1,14 @@
+#!/bin/bash
+
+make
+sudo rmmod bytes4m.ko
+sudo insmod bytes4m.ko
+cat /dev/bytes4m
+
+echo abc > /dev/bytes4m 
+cat /dev/bytes4m 
+echo defg > /dev/bytes4m 
+cat /dev/bytes4m 
+
+
+
