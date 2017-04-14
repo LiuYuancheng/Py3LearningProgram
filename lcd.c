@@ -14,7 +14,7 @@ struct dev_msg_t {
   char data[100];
 };
 
-#define MAJOR_NUMBER 66
+#define MAJOR_NUMBER 67
 #define DEV_SIZE 4 * 1024 * 1024
 #define LCD_IOC_TYPE 'k'
 #define LCD_IOC_HELLO _IO(LCD_IOC_TYPE, 1)
