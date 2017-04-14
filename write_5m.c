@@ -4,7 +4,7 @@
 
 int main() {
   FILE* fp;
-  char data[3 * 1024 * 1024];
+  char data[5 * 1024 * 1024];
   size_t result = 0;
   memset(data, '_', sizeof(data));
   data[0] = 'S';

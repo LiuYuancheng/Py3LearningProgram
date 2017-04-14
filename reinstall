@@ -1,8 +1,8 @@
 #!/bin/bash
 
 make
-sudo rmmod bytes4m.ko
-sudo insmod bytes4m.ko
+rmmod bytes4m.ko
+insmod bytes4m.ko
 cat /dev/bytes4m
 
 echo abc > /dev/bytes4m 
