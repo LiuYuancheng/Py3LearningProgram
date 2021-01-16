@@ -13,6 +13,7 @@
 import sys
 from timeit import timeit
 
+
 class ClosureInstance:
     def __init__(self, locals=None):
         if locals is None:
@@ -39,11 +40,12 @@ def Stack1():
 
     return ClosureInstance()
 
+
 class Stack2:
 
     def __init__(self):
         self.items = []
-    
+
     def push(self, item):
         self.items.append(item)
 
