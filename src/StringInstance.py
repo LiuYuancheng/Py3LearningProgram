@@ -24,6 +24,35 @@ class Pair:
     def __str__(self):
         return '({0.x!r}, {0.y!r})'.format(self)
 
+# test case:
 p = Pair(3,4)
-p
 print(p)
+
+
+# Customizing String format:
+_formates = {
+    'ymd':'{d.year}-{d.month}-{d.day}',
+    'mdy':'{d.month}/{d.day}/{d.year}',
+    'dmy':'{d.day}\{d.month}\{d.year}'
+}
+
+class Date:
+    def __init__(self, year , month, day):
+        self.year = year
+        self.month = month
+        self.day = day
+
+    def __format__(self, code):
+        fmt = _formates[code] if code in _formates.keys() else _formates['ymd']
+        return fmt.format(d = self)
+
+# test Case: 
+d = Date(2021, 2, 1)
+print(format(d))
+print(format(d, 'mdy'))
+print('The date is {:ymd}'.format(d))
+print('The date is {:mdy}'.format(d))
+
+
+
+
