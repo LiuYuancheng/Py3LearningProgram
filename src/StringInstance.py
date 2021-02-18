@@ -11,8 +11,11 @@
 # License:
 #-----------------------------------------------------------------------------
 
+import math
 from functools import partial
 from socket import socket, AF_INET, SOCK_STREAM
+
+#-----------------------------------------------------------------------------
 class Pair:
     def __init__(self, x, y):
         self.x = x
@@ -56,6 +59,7 @@ print(format(d, 'mdy'))
 print('The date is {:ymd}'.format(d))
 print('The date is {:mdy}'.format(d))
 
+#-----------------------------------------------------------------------------
 # Make Obejct support the Context-management protocol
 
 class LazyConnection:
@@ -103,6 +107,56 @@ with conn1 as s0:
         s1.send(b'\r\n')
         resp = b''.join(iter(partial(s1.recv, 8192), b''))
         print(resp)
+
+#-----------------------------------------------------------------------------
+# Test add the properity attribute to a class 
+class Person:
+    def __init__(self, fName):
+        self.fName = fName
+
+    @property
+    def firstName(self):
+        return self.fName
+
+    @firstName.setter
+    def firstName(self, val):
+        if not isinstance(val, str):
+            raise TypeError("Name must be a string")
+        self.fName = val
+
+    @firstName.deleter
+    def firstName(self):
+        raise AttributeError("Can not delete the attribute")
+
+a = Person("Guido")
+print(a.firstName)
+try:
+    a.firstName = 42
+except Exception as e:
+    print(e)
+
+try:
+    del a.firstName
+except Exception as e:
+    print(e)   
+
+
+class Circle:
+    def __init__(self, radius):
+        self.radius = radius
+
+    @property
+    def area(self):
+        return math.pi * self.radius ** 2
+    
+    @property
+    def perimeter(self):
+        return math.pi * self.radius *2
+
+c = Circle(4.0)
+print("Area: %s" %str(c.area))
+print("Perimeter: %s" %str(c.perimeter))
+
 
 
 
