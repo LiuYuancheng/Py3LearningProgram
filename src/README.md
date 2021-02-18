@@ -25,24 +25,24 @@ cd bin/
 ```
 
   
-## Modules
+Modules		C_State	Language	status
 - DH, not available now due to some issues.
-- RSA-KEM	OK	cpp
-- BIKE 	X	cpp
-- Frodo 	X	cpp
-- NewHope 	X	cpp
-- HQC 		X	cpp
-- RQC		OK	cpp
-- NTRU 	X	cpp
-- NTRU Prime	OK	cpp
-- LEDAcrypt 	X	cpp
-- LAC 		X	cpp
-- SIKE		OK	cpp
-- NTS		OK	cpp
-- ThreeBears	OK	cpp
-- Kyber 	X	cpp
-- Saber	OK	cpp
-- Rollo	OK	cpp
-- Round5	OK	cpp
-- CM 		X	cpp
+- RSA-KEM	OK	cpp		Round2-only
+- BIKE 		X	cpp		Round3-Alternative
+- Frodo 	X	cpp		Round3-Alternative		
+- NewHope 	X	cpp		Round2-only
+- HQC 		X	cpp		Round3-Alternative
+- RQC		OK	cpp		Round2-only
+- NTRU 		X	cpp		Round3-FinalList
+- NTRU Prime	OK	cpp		Round3-Alternative
+- LEDAcrypt 	X	cpp		Round2-only
+- LAC 		X	cpp		Round2-only
+- SIKE		OK	cpp		Round3-Alternative
+- NTS		OK	cpp		Round2-only
+- ThreeBears	OK	cpp		Round2-only
+- Kyber 	X	cpp		Round3-FinalList
+- Saber		OK	cpp		Round3-FinalList
+- Rollo		OK	cpp		Round2-only
+- Round5	OK	cpp		Round2-only
+- CM 		X	cpp		Round2-only
 
