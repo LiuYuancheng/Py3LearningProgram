@@ -7,8 +7,8 @@
 # Author:      Yuancheng Liu
 #
 # Created:     2021/01/16
-# Copyright:
-# License:
+# Copyright:    n.a    
+# License:      n.a
 #-----------------------------------------------------------------------------
 
 import math
@@ -29,10 +29,8 @@ class Pair:
     def __str__(self):
         return '({0.x!r}, {0.y!r})'.format(self)
 
-
 # test case:
-p = Pair(3, 4)
-print(p)
+print(Pair(3, 4))
 
 # Customizing String format:
 _formates = {
@@ -50,7 +48,6 @@ class Date:
     def __format__(self, code):
         fmt = _formates[code] if code in _formates.keys() else _formates['ymd']
         return fmt.format(d=self)
-
 
 # test Case:
 d = Date(2021, 2, 1)
@@ -140,7 +137,6 @@ try:
 except Exception as e:
     print(e)   
 
-
 class Circle:
     def __init__(self, radius):
         self.radius = radius
@@ -156,6 +152,103 @@ class Circle:
 c = Circle(4.0)
 print("Area: %s" %str(c.area))
 print("Perimeter: %s" %str(c.perimeter))
+
+#-----------------------------------------------------------------------------
+# Call a method in on a Parent class
+
+class Base:
+    def __init__(self):
+        print('Base.__init__ called.')
+
+class Base_A(Base):
+    def __init__(self):
+        super().__init__()
+        print('Base_A.__init__ called.')
+
+class Base_B(Base):
+    def __init__(self):
+        super().__init__()
+        print('Base_B.__init__ called.')
+
+class Base_C(Base_A, Base_B):
+    def __init__(self):
+        super().__init__()
+        print('Base_c.__init__ called.')
+
+print('Test: init the Base_c object: ')
+c = Base_C()
+print(Base_C.__mro__)
+
+# Call a not exist function in class B from an unrelated class A.
+class Spam_A:
+    def spam(self):
+        print('A.spam called.')
+        super().spam()
+
+class Spam_B:
+    def spam(self):
+        print('B.spam called.')
+
+class Spam_C(Spam_A, Spam_B):
+    pass
+
+print('Test: init the Spam_C object: ')
+try:
+    a = Spam_A()
+    a.spam()
+except Exception as err: 
+    print("Init Spam A got exception: %s" %str(err))
+
+c = Spam_C()
+c.spam()
+
+#-----------------------------------------------------------------------------
+# extend property in a subclass
+class Person_A:
+    def __init__(self, name):
+        self.name = name
+    @property
+    def name(self):
+        return self._name
+
+    @name.setter
+    def name(self, val):
+        if not isinstance(val, str):
+            raise TypeError("Expected a string.")
+        self._name = val
+
+    @name.deleter
+    def name(self):
+        raise AttributeError("Can not deleted the name.")
+
+class SubPerson_A(Person_A):
+    @property
+    def name(self):
+        print('Getting name.')
+        return super().name
+
+    @name.setter
+    def name(self, val):
+        print('Setting name to', val)
+        super(SubPerson_A, SubPerson_A).name.__set__(self, val)
+    
+    @name.deleter
+    def name(self):
+        print('Delete name')
+        super(SubPerson_A, SubPerson_A).name.__delete(self)
+
+s = SubPerson_A("Guido")
+print(s.name)
+try:
+    s.name = 42
+except Exception as e:
+    print(e)
+
+
+
+
+
+    
 
 
 
