@@ -244,6 +244,113 @@ try:
 except Exception as e:
     print(e)
 
+#-----------------------------------------------------------------------------
+# Create a new kind of class or instance attribute
+class Integer:
+    def __init__(self, name):
+        self.name = name
+    
+    def __get__(self, instance, cls):
+        val = self if instance is None else instance.__dict__[self.name]
+        return val
+    
+    def __set__(self, instance, val):
+        if not isinstance(val, int):
+            raise TypeError("Input must be an int.")
+        instance.__dict__[self.name] = val
+    
+    def __delete__(self, instance):
+        del instance.__dict__[self.name]
+
+
+class Point:
+    x = Integer('x')
+    y = Integer('y')
+    def __init__(self,x, y):
+        self.x = x 
+        self.y = y
+
+p = Point(2,3)
+print("p.x = ", p.x)
+print('p.y =', p.y)
+
+p.y = 5 
+try:
+    p.y = 2.3
+except Exception as e:
+    print(e)
+#-----------------------------------------------------------------------------
+class lazyproperty:
+    def __init__(self, func):
+        self.func = func
+
+    def __get__(self, instance, cls):
+        if instance is None:
+            return self
+        else:
+            value = self.func(instance)
+            setattr(instance, self.func.__name__, value)
+            return value
+
+
+class CircleL:
+    def __init__(self, radius):
+        self.radius = radius
+
+    @lazyproperty
+    def area(self):
+        print("Computing area")
+        return math.pi * self.radius ** 2
+
+    @lazyproperty
+    def perimeter(self):
+        print("Computing the perimeter")
+        return 2*math.pi * self.radius
+
+c = CircleL(4.0)
+print(c.radius)
+print(c.area)
+print(c.perimeter)
+
+#-----------------------------------------------------------------------------
+# Simplifying the initialization of data structure
+class Structure:
+    _fields = []
+    def __init__(self, *args, **kwargs):
+        if len(args) > len(self._fields):
+            raise TypeError('Expected {} arguments'.format(len(self._fields)))
+
+        # set all of the positional arguments
+        for name, value in zip(self._fields, args):
+            setattr(self, name, value)
+
+        # set the remaining keyword arguments
+        for name in self._fields[len(args):]:
+            setattr(self, name, kwargs.pop(name))
+        
+        # Check for any remaining unknown arguments
+        if kwargs:
+            raise TypeError('Invalid argumens(s):{}'.format(','.join(kwargs)))
+
+class Stock(Structure):
+    _fields = ['name', 'shares', 'price']
+
+s1 = Stock('ACME', 50, 91.1)
+s2 = Stock('ACME', 50, price=91.1)
+s3 = Stock('ACME', shares=50, price=91.1)
+help(Stock)
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
