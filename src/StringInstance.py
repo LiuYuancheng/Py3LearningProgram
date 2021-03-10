@@ -338,8 +338,27 @@ class Stock(Structure):
 s1 = Stock('ACME', 50, 91.1)
 s2 = Stock('ACME', 50, price=91.1)
 s3 = Stock('ACME', shares=50, price=91.1)
-help(Stock)
+#help(Stock)
 
+#-----------------------------------------------------------------------------
+# YAML file test
+# pip install pyyaml 
+import yaml
+
+#stream = open("yamlTest.yaml", 'r')
+#dictionary = yaml.load(stream)
+#for key, value in dictionary.items():
+#    print (key + " : " + str(value))
+
+stream = open("yamlTest.yaml", 'r')
+dictionary = yaml.load_all(stream)
+
+for doc in dictionary:
+    print("New document:")
+    for key, value in doc.items():
+        print(key + " : " + str(value))
+        if type(value) is list:
+            print(str(len(value)))
 
 
 

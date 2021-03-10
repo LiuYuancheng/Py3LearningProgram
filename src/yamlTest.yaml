@@ -1,0 +1,40 @@
+# This is a full line comment
+foo: bar
+pleh: help
+numType:
+  decimal: 12345
+  hexidecimal: 0x12d4
+  octal: 02332
+  fixed_float: 120.15
+  exponential_float: 12.315e+05
+  pos_infinity: .inf 
+  neg_infinity: -.inf
+  not_number: .NAN
+# String 
+stuff:
+  foo: this is not a normal string\n
+  #if we want escape sequences handled, we need to use double quotes.
+  bar: "this is not a normal string\n"
+null_val1: ~
+null_val2: null
+# Boolean: 
+Boolean1: True
+Boolean2: False
+Boolean3: On
+Boolean4: Off
+
+# Array: 
+items: [ 1, 2, 3, 4, 5 ]
+items2:
+  - 1
+  - 2
+  - 3
+  - 4
+# Dict
+foo2: { thing1: huey, thing2: louie, thing3: dewey }
+
+... # end operator
+
+--- # need to call load_all to read this part
+one: two
+three: four
