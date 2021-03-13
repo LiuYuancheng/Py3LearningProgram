@@ -345,6 +345,7 @@ s3 = Stock('ACME', shares=50, price=91.1)
 # pip install pyyaml 
 import yaml
 
+# read a yaml file
 #stream = open("yamlTest.yaml", 'r')
 #dictionary = yaml.load(stream)
 #for key, value in dictionary.items():
@@ -360,7 +361,12 @@ for doc in dictionary:
         if type(value) is list:
             print(str(len(value)))
 
+# Write a yaml file
+dict_file = [{'sports' : ['soccer', 'football', 'basketball', 'cricket', 'hockey', 'table tennis']},
+{'countries' : ['Pakistan', 'USA', 'India', 'China', 'Germany', 'France', 'Spain']}]
 
+with open('write.yaml', 'w') as file:
+    documents = yaml.dump(dict_file, file)
 
 
 
