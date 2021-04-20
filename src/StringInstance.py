@@ -11,6 +11,8 @@
 # License:      n.a
 #-----------------------------------------------------------------------------
 
+import io
+from abc import ABCMeta, abstractmethod
 import math
 from functools import partial
 from socket import socket, AF_INET, SOCK_STREAM
@@ -369,25 +371,154 @@ with open('write.yaml', 'w') as file:
     documents = yaml.dump(dict_file, file)
 
 
+#-----------------------------------------------------------------------------
+# python Abstract Base Class : abc
+print("python Abstract Base Class : abc ")
 
 
+class IStream(metaclass=ABCMeta):
+    @abstractmethod
+    def read(self, maxbytes=-1):
+        pass
+
+    @abstractmethod
+    def write(self, data):
+        pass
+# Register the built-in I/O ckass as supporting a interface
 
 
+IStream.register(io.IOBase)
+
+f = open('write.yaml')
+print(isinstance(f, IStream))
+
+#-----------------------------------------------------------------------------
+# Implement a data model or Type system
 
 
+class Descriptor:
+    def __init__(self, name=None, **opts):
+        self.name = name
+        for key, value in opts.items():
+            setattr(self, key, value)
+
+    def __set__(self, instance, value):
+        instance.__dict__[self.name] = value
 
 
+class Typed(Descriptor):
+    expect_type = type(None)
+
+    def __set__(self, instance, value):
+        if not isinstance(value, self.expect_type):
+            raise TypeError('Expected %s' % str(self.expect_type))
+        super().__set__(instance, value)
 
 
-
-    
-
-
-
-
-
+class Unsigned(Descriptor):
+    def __set__(self, instance, value):
+        if value < 0:
+            raise ValueError('Expect >= 0')
+        super().__set__(instance, value)
 
 
+class MaxSized(Descriptor):
+    def __init__(self, name=None, **opts):
+        if not 'size' in opts:
+            raise TypeError('Missing the expected size option.')
+        super().__init__(name, **opts)
+
+    def __set__(self, instance, value):
+        if len(value) >= self.size:
+            raise ValueError('size must be < %s' % str(self.size))
+        super().__set__(instance, value)
 
 
+class IntegerI(Typed):
+    expect_type = int
 
+
+class UnsignedInteger(IntegerI, Unsigned):
+    pass
+
+
+class Float(Typed):
+    expect_type = float
+
+
+class UnsignedFloat(Float, Unsigned):
+    pass
+
+
+class String(Typed):
+    expect_type = str
+
+
+class SizedString(String, MaxSized):
+    pass
+
+
+class Stock2:
+    name = SizedString('name', size=8)
+    shares = UnsignedInteger('shares')
+    price = UnsignedFloat('price')
+
+    def __init__(self, name, shares, price):
+        self.name = name
+        self.shares = shares
+        self.price = price
+
+print('Run:')
+s = Stock2('ACME2', 50, 91.1)
+print(s.name)
+print(s.shares)
+print(s.price)
+
+def check_attibutes(** kwargs):
+    def decorate(cls):
+        for key, value in kwargs.items():
+            if isinstance(value, Descriptor):
+                value.name = key
+                setattr(cls, key, value)
+            else:
+                setattr(cls, key, value(key))
+        return cls
+    return decorate
+
+# use a class dacorator
+@check_attibutes(   name = SizedString(size=8),
+                    shares= UnsignedInteger,
+                    price = UnsignedFloat )
+
+class Stock3:
+    def __init__(self, name, shares, price):
+        self.name = name
+        self.shares = shares
+        self.price = price 
+
+s = Stock3('ACME3', 50, 91.1)
+print(s.name)
+print(s.shares)
+print(s.price)
+
+# use a meta class 
+class checkmeta(type):
+    def __new__(cls, clsname, bases, methods):
+        for key, value in methods.items():
+            if isinstance(value, Descriptor):
+                value.name = key
+        return type.__new__(cls, clsname, bases, methods)
+
+class Stock4(metaclass = checkmeta):
+    name = SizedString(size=8)
+    shares= UnsignedInteger,
+    price = UnsignedFloat
+    def __init__(self, name, shares, price):
+        self.name = name
+        self.shares = shares
+        self.price = price 
+
+s = Stock4('ACME4', 50, 91.1)
+print(s.name)
+print(s.shares)
+print(s.price)
