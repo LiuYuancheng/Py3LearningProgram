@@ -10,6 +10,8 @@
 # Copyright:
 # License:
 #-----------------------------------------------------------------------------
+import bisect
+import collections
 import sys
 from timeit import timeit
 
@@ -61,9 +63,11 @@ print(timeit('s1.push(1);s1.pop()', 'from __main__ import s1'))
 s2 = Stack2()
 print(timeit('s2.push(1);s2.pop()', 'from __main__ import s2'))
 #-----------------------------------------------------------------------------
-# Another decorator test from the StringInstance.py file 
+# Another decorator test from the StringInstance.py file
 
-# Base class, use a descriptor to set a val  
+# Base class, use a descriptor to set a val
+
+
 class Descriptor:
     def __init__(self, name=None, **opts):
         self.name = name
@@ -73,22 +77,26 @@ class Descriptor:
     def __set__(self, instance, value):
         instance.__dict__[self.name] = value
 
+
 def Typed(expected_type, cls=None):
     if cls is None:
         return lambda cls: Typed(expected_type, cls)
 
     super_set = cls.__set__
+
     def __set__(self, instance, value):
         if not isinstance(value, expected_type):
-            raise TypeError('Expect %s' %str(expected_type))
+            raise TypeError('Expect %s' % str(expected_type))
         super_set(self, instance, value)
-    
+
     cls.__set__ = __set__
 
-    return cls 
+    return cls
+
 
 def Unsigned(cls):
     super_set = cls.__set__
+
     def __set__(self, instance, value):
         if value < 0:
             raise ValueError('Expect > 0')
@@ -97,8 +105,10 @@ def Unsigned(cls):
     cls.__set__ = __set__
     return cls
 
+
 def MaxSized(cls):
     super_init = cls.__init__
+
     def __init__(self, name=None, **opts):
         if 'size' not in opts:
             raise ValueError('Expect > 0')
@@ -106,6 +116,7 @@ def MaxSized(cls):
     cls.__init__ = __init__
 
     super_set = cls.__set__
+
     def __set__(self, instance, value):
         if len(value) > self.size:
             raise ValueError('Expect > 0')
@@ -114,29 +125,36 @@ def MaxSized(cls):
     cls.__set__ = __set__
     return cls
 
+
 @Typed(int)
 class Integer(Descriptor):
     pass
+
 
 @Unsigned
 class UnsignedInteger(Integer):
     pass
 
+
 @Typed(float)
 class Float(Descriptor):
     pass
+
 
 @Unsigned
 class UnsignedFloat(Float):
     pass
 
+
 @Typed(str)
 class String(Descriptor):
     pass
 
+
 @MaxSized
 class SizedString(String):
-    pass 
+    pass
+
 
 class Stock2:
     name = SizedString('name', size=8)
@@ -148,18 +166,65 @@ class Stock2:
         self.shares = shares
         self.price = price
 
+
 print('Run:')
 s = Stock2('ACME2', 50, 91.1)
 print(s.name)
 print(s.shares)
 print(s.price)
 
+#-----------------------------------------------------------------------------
+# implement ineration by using the
 
 
+class SortedItem(collections.Sequence):
+    def __init__(self, initial=None):
+        self._item = sorted(initial)
+
+    def __getitem__(self, idx):
+        return self._item[idx]
+
+    def __len__(self):
+        return len(self._item)
+
+    def add(self, item):
+        bisect.insort(self._item, item)
 
 
+items = SortedItem([5, 1, 3])
+print(list(items))
+items.add(2)
+print(list(items))
+print(len(items))
+print(items[-1])
 
 
+class Items(collections.MutableSequence):
+    def __init__(self, initial=None):
+        self._items = list(initial)
 
+    def __getitem__(self, idx):
+        print('Geting:', idx)
+        return self._items[idx]
 
+    def __setitem__(self, idx, val):
+        print('Setting:', idx, val)
+        self._items[idx] = val
 
+    def __delitem__(self, idx):
+        print('Deleting:', idx)
+        del self._items[idx]
+
+    def insert(self, idx, val):
+        print('Inserting:', idx, val)
+        self._items.insert(idx, val)
+
+    def __len__(self):
+        print('Len:')
+        return len(self._items)
+
+a = Items([1, 2, 3])
+print(len(a))
+a.append(4)
+a.count(2)
+a.remove(3)
