@@ -522,3 +522,34 @@ s = Stock4('ACME4', 50, 91.1)
 print(s.name)
 print(s.shares)
 print(s.price)
+
+#-----------------------------------------------------------------------------
+# define more than on constructor in a class 
+import time 
+class Data:
+    def __init__(self, year, month, day):
+        self.year = year
+        self.month = month
+        self.day = day
+    
+    @classmethod # the method will return the class
+    def today(cls):
+        t =time.localtime()
+        return cls(t.tm_year, t.tm_mon, t.tm_mday)
+
+a = Data(2021, 4, 22)
+print(a.__dict__.items())
+b = Data.today()
+print(b.__dict__.items())
+
+#-----------------------------------------------------------------------------
+# Create an instance without call the __init__ funciton.
+c = Date.__new__(Date)
+for key, val in b.__dict__.items():
+    setattr(c, key, val)
+print(c.__dict__.items())
+
+
+
+
+
