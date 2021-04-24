@@ -223,6 +223,7 @@ class Items(collections.MutableSequence):
         print('Len:')
         return len(self._items)
 
+
 a = Items([1, 2, 3])
 print(len(a))
 a.append(4)
@@ -230,12 +231,13 @@ a.count(2)
 a.remove(3)
 
 #-----------------------------------------------------------------------------
-# implement proxy class 
+# implement proxy class
+
 
 class Proxy:
     def __init__(self, obj):
         self._obj = obj
-    
+
     def __getattr__(self, name):
         print('getattr:', name)
         return getattr(self._obj, name)
@@ -254,11 +256,14 @@ class Proxy:
             print('delattr')
             delattr(self._obj, name)
 
+
 class Spam:
     def __init__(self, x):
-        self.x = x 
+        self.x = x
+
     def bar(self, y):
         print('Spam.bar()', self.x, y)
+
 
 s = Spam(2)
 p = Proxy(s)
@@ -266,6 +271,32 @@ p = Proxy(s)
 print(p.x)
 p.bar(4)
 p.x = 4
+
+#-----------------------------------------------------------------------------
+# Extending class with mixins
+
+
+class LoggedMappingMixin:
+    """ Get Logging into a class.
+    """
+    __slots__ = ()
+
+    def __getitem__(self, key):
+        print('Getting:', str(key))
+        return super().__getitem__(key)
+
+    def __setitem__(self, key, val):
+        print('Setting{}={!r}'.format(key, val))
+
+    def __delitem__(self, key):
+        print('Deleting', str(key))
+        return super.__delitem__(key)
+
+
+
+
+
+
 
 
 
