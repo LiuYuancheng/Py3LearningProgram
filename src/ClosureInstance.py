@@ -287,10 +287,63 @@ class LoggedMappingMixin:
 
     def __setitem__(self, key, val):
         print('Setting{}={!r}'.format(key, val))
+        return super().__setitem__(key, val)
 
     def __delitem__(self, key):
         print('Deleting', str(key))
         return super.__delitem__(key)
+
+
+class SetOnceMappingMixin:
+    """ This mix in only alow the key to be set once.
+    """
+    __slots__ = ()
+
+    def __setitem__(self, key, val):
+        if key in self:
+            raise KeyError("%s is already set" % str(key))
+        return super().__setitem__(key, val)
+
+
+class StringKeysMappingMixin:
+    """ Restrict key to string only.
+    """
+    __slots__ = ()
+
+    def __setitem__(self, key, val):
+        if not isinstance(key, str):
+            raise TypeError("The key: %s is not a string type" % str(key))
+        return super().__setitem__(key, val)
+
+
+class LoggedDict(LoggedMappingMixin, dict):
+    pass
+
+d = LoggedDict()
+d['x'] = 23
+print(d['x'])
+
+
+#-----------------------------------------------------------------------------
+# Calling a method on an Object Given the Name as a String
+
+import math
+
+class Point:
+    def __init__(self, x, y):
+        self.x = x 
+        self.y = y
+
+    def __repr__(self):
+        return 'Point({!r}, {!r})'.format(self.x, self.y)
+
+    def distance(self, x, y):
+        return math.hypot(self.x-x, self.y-y)
+
+pt = Point(2,3)
+dist = getattr(p, 'distance')(0, 0)
+print(dist)
+
 
 
 

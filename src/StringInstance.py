@@ -549,7 +549,93 @@ for key, val in b.__dict__.items():
     setattr(c, key, val)
 print(c.__dict__.items())
 
+#-----------------------------------------------------------------------------
+# Implementing stateful objects or state machine. 
+class ConnectionState:
+    @staticmethod
+    def read(conn):
+        raise NotImplementedError()
+    
+    @staticmethod
+    def write(conn):
+        raise NotImplementedError()
 
+    @staticmethod
+    def open(conn):
+        raise NotImplementedError()
 
+    @staticmethod
+    def close(conn):
+        raise NotImplementedError()
 
+class ClosedConnectionState(ConnectionState):
+    @staticmethod
+    def read(conn):
+        raise RuntimeError('Closed')
 
+    @staticmethod
+    def write(conn):
+        raise RuntimeError('Closed')
+
+    @staticmethod
+    def open(conn):
+        conn.new_state(OpenConnectionState)
+
+    @staticmethod
+    def close(conn):
+        raise RuntimeError('Already Closed')
+    
+class OpenConnectionState(ConnectionState):
+    
+    @staticmethod
+    def read(conn):
+        print('read')
+
+    @staticmethod
+    def write(conn):
+        print('Closed')
+
+    @staticmethod
+    def open(conn):
+        raise RuntimeError('Already Opened')
+   
+    @staticmethod
+    def close(conn):
+        conn.new_state(ClosedConnectionState)
+
+class Connection:
+    def __init__(self):
+        self.new_state(ClosedConnectionState)
+
+    def new_state(self, newState):
+        self._state = newState
+
+    def read(self):
+        return self._state.read(self)
+
+    def write(self):
+        return self._state.write(self)
+    
+    def open(self):
+        return self._state.open(self)
+
+    def close(self):
+        return self._state.close(self)
+
+conn = Connection()
+print(conn._state)
+
+conn.open()
+print(conn._state)
+
+conn.read()
+print(conn._state)
+
+conn.write()
+print(conn._state)
+
+conn.close()
+print(conn._state)    
+
+#-----------------------------------------------------------------------------
+#
