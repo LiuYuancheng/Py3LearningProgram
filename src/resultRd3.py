@@ -34,20 +34,15 @@ with open('result_sep_2019_Hongwei.json', 'w') as f:
         ar.append(cydata)
         for n in cydata["elements"]["nodes"]:
           
-          if "subgraphs" in n["data"].keys():
-            if parentid in n["data"]["subgraphs"]:
-              pass
-            else:
-              n["data"]["subgraphs"].append(parentid)
-          else:
-            n["data"]["subgraphs"] = [parentid]
-          
-          # check and append the subgraph info to added nodes:
+          findRcd = False
           for nodep in nodes:
             if n["data"]["id"] == nodep["data"]["id"]:
               nodep["data"]["subgraphs"].append(parentid)
-
-          nodes.append(n)
+              findRcd = True
+          
+          if not findRcd:
+            n["data"]["subgraphs"] = [parentid]
+            nodes.append(n)
 
         for e in cydata["elements"]["edges"]:
           edges.append(e)
