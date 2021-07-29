@@ -33,7 +33,7 @@ with open('result_sep_2019_Hongwei.json', 'w') as f:
     edges = []
     with open(subgraph + '.json', 'w') as f2:
       for idx, g in enumerate(lst):
-        parentid = "subgraph" + str(idx)
+        parentid = "G" + str(idx)
         nodes.append({
             "data": {
               "id": parentid
