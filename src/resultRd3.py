@@ -19,7 +19,7 @@ with open('result_sep_2019_Hongwei.json', 'w') as f:
   ar = []
   for subgraph in subgraph_collection:
     lst = subgraph_collection.get(subgraph)
-    subgraphs = []
+    #subgraphs = []
     nodes = []
     edges = []
     with open(subgraph + '.json', 'w') as f2:
@@ -31,7 +31,7 @@ with open('result_sep_2019_Hongwei.json', 'w') as f:
         graphattr["id"] = parentid
         graphattr["score"] = g.score
         graphattr["consequences"] = g.consequences
-        subgraphs.append({
+        nodes.append({
             "data": graphattr
         })
         cydata = nx.readwrite.json_graph.cytoscape_data(g)
@@ -76,7 +76,7 @@ with open('result_sep_2019_Hongwei.json', 'w') as f:
 
       cy = {
           "elements": {
-              "subgraphs": subgraphs,
+              #"subgraphs": subgraphs,
               "nodes": nodes,
               "edges": edges
           }
