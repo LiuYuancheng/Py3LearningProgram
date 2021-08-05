@@ -83,7 +83,10 @@ with open(fileName+'_filtered.json', 'w') as f:
 
           nodes.append(n)
 
+      edgeCount = 0 
       for e in cydata["elements"]["edges"]:
+        e["data"]["idx"] = edgeCount
+        edgeCount += 1
         edges.append(e)
 
       ar.append(cydata)
