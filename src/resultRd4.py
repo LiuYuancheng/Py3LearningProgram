@@ -10,19 +10,24 @@ from geoip import geolite2
 
 #fileName = 'windows'
 #fileName = 'snort'
-#fileName = 'fortinet'
-fileName = 'linked'
+fileName = 'fortinet'
+#fileName = 'linked'
 # read the dictionary containing 3 lists of subgraphs for snort , fortinet and windows
 # nx MultiDiGraph
 #with open('result_sep_2019_Hongwei.pickle', 'rb') as handle:
-with open(fileName+'_filtered.pkl', 'rb') as handle:
+#with open(fileName+'_filtered_new.pkl', 'rb') as handle:
+#    subgraph_collection = pickle.load(handle)
+
+with open(fileName+'_filtered_new_columns.pkl', 'rb') as handle:
     subgraph_collection = pickle.load(handle)
+
 
 
 # dump as json to file
 #with open('result_sep_2019_Hongwei.json', 'w') as f:
 
-with open(fileName+'_filtered.json', 'w') as f:
+#with open(fileName+'_filtered_new.json', 'w') as f:
+with open(fileName+'_filtered_new_columns.json', 'w') as f:
   ar = []
   
   lst = subgraph_collection
@@ -31,9 +36,11 @@ with open(fileName+'_filtered.json', 'w') as f:
   edges = []
   with open(fileName+'.json', 'w') as f2:
 
+  
     for idx, g in enumerate(lst):
       parentid = "G" + str(idx)
       # print(parentid, g.score, g.consequences)
+      # print(g.__dict__)
       graphattr = g.graph
       graphattr["id"] = parentid
       if hasattr(g, 'score'):
@@ -86,6 +93,13 @@ with open(fileName+'_filtered.json', 'w') as f:
       edgeCount = 0 
       for e in cydata["elements"]["edges"]:
         e["data"]["idx"] = edgeCount
+        if (fileName=='linked'):
+          e["data"]['t_port_values'] = list(e['data']['t_port_values'])
+        else:
+          e["data"]['t_port_values'] = [str(e['data']['t_port_values'])]
+        e["data"]['s_port_values'] = list(e['data']['s_port_values'])
+
+        e["data"]['start_timestamp'] = str(e['data']['start_timestamp'])
         edgeCount += 1
         edges.append(e)
 
@@ -98,6 +112,7 @@ with open(fileName+'_filtered.json', 'w') as f:
             "edges": edges
         }
     }
+    print(cy)
     f2.write(json.dumps(cy))
   # write array of sub graphs
   f.write(json.dumps(ar))
