@@ -10,8 +10,22 @@ from geoip import geolite2
 
 #fileName = 'windows'
 #fileName = 'snort'
-fileName = 'Files_for_visualization/linked_subgraphs_win_snort_sep_2019'
 #fileName = 'linked'
+
+#fileName = 'Files_for_visualization/linked_subgraphs_all_logs_sep_2019'
+#fileName = 'Files_for_visualization/linked_subgraphs_snort_forti_june_2020'
+#fileName = 'Files_for_visualization/linked_subgraphs_snort_forti_sep_2019'
+#fileName = 'Files_for_visualization/linked_subgraphs_win_forti_june_2020'
+#fileName = 'Files_for_visualization/linked_subgraphs_win_forti_sep_2019'
+#fileName = 'Files_for_visualization/subgraphs_fortinet_june_2020'
+#fileName = 'Files_for_visualization/subgraphs_snort_june_2020'
+#fileName = 'Files_for_visualization/subgraphs_snort_sep_2019'
+#fileName = 'Files_for_visualization/subgraphs_windows_june_2020'
+#fileName = 'Files_for_visualization/sugraphs_fortinet_sep_2019'
+fileName = 'Files_for_visualization/sugraphs_windows_sep_2019'
+#fileName = 'Files_for_visualization/linked_subgraphs_win_snort_sep_2019'
+
+
 # read the dictionary containing 3 lists of subgraphs for snort , fortinet and windows
 # nx MultiDiGraph
 #with open('result_sep_2019_Hongwei.pickle', 'rb') as handle:
