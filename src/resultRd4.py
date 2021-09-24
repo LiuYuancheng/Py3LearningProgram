@@ -93,7 +93,7 @@ with open(fileName+'_filtered_new_columns.json', 'w') as f:
       edgeCount = 0 
       for e in cydata["elements"]["edges"]:
         e["data"]["idx"] = edgeCount
-        if (fileName=='linked'):
+        if ('linked'in fileName):
           e["data"]['t_port_values'] = list(e['data']['t_port_values'])
         else:
           e["data"]['t_port_values'] = [str(e['data']['t_port_values'])]
