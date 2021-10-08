@@ -44,6 +44,7 @@ with open(fileName+'._filtered_new_columns.json', 'w') as f:
 #with open(fileName+'_filtered_new_columns.json', 'w') as f:
   ar = []
   lst = subgraph_collection.get('fortinet')
+  print('-------------')
   print(lst)
   #subgraphs = []
   nodes = []
@@ -53,7 +54,7 @@ with open(fileName+'._filtered_new_columns.json', 'w') as f:
     for idx, g in enumerate(lst):
       parentid = "G" + str(idx)
       # print(parentid, g.score, g.consequences)
-      print(g)
+      #print(g)
       graphattr = g.graph
       
       #graphattr = g.snort
@@ -88,7 +89,7 @@ with open(fileName+'._filtered_new_columns.json', 'w') as f:
       else: 
         graphattr["num_events"] = []
 
-
+      print(parentid, g.num_events)
 
       
       nodes.append({
@@ -154,7 +155,7 @@ with open(fileName+'._filtered_new_columns.json', 'w') as f:
             "edges": edges
         }
     }
-    print(cy)
+    #print(cy)
     f2.write(json.dumps(cy))
   # write array of sub graphs
   f.write(json.dumps(ar))
