@@ -22,7 +22,9 @@ from geoip import geolite2
 #fileName = 'Files_for_visualization/subgraphs_snort_sep_2019'
 #fileName = 'Files_for_visualization/subgraphs_windows_june_2020'
 #fileName = 'Files_for_visualization/sugraphs_fortinet_sep_2019'
-fileName = 'Files_for_visualization/sugraphs_windows_sep_2019'
+#fileName = 'Files_for_visualization/sugraphs_windows_sep_2019'
+fileName = 'Files_for_visualization/fortinet_list_sep_2019'
+
 #fileName = 'Files_for_visualization/linked_subgraphs_win_snort_sep_2019'
 
 
