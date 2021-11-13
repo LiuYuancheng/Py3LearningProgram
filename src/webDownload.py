@@ -4,6 +4,7 @@ from urllib.parse import urljoin, urlparse
 from bs4 import BeautifulSoup
 import re
 
+
 def savePage(url, pagefilename='page'):
     def soupfindnSave(pagefolder, tag2find='img', inner='src'):
         """saves on specified `pagefolder` all tag2find objects"""
@@ -14,6 +15,7 @@ def savePage(url, pagefilename='page'):
                 if not res.has_attr(inner): # check if inner tag (file object) exists
                     continue # may or may not exist
                 filename = re.sub('\W+', '', os.path.basename(res[inner])) # clean special chars
+                print('filename', filename)
                 fileurl = urljoin(url, res.get(inner))
                 filepath = os.path.join(pagefolder, filename)
                 # rename html ref so can move html and folder of files anywhere
@@ -38,4 +40,4 @@ def savePage(url, pagefilename='page'):
         file.write(soup.prettify('utf-8'))
     return soup
 
-soup = savePage('https://www.google.com', 'google')
+soup = savePage('https://www.google.com/', 'google')
