@@ -1,0 +1,454 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.10.0" />
+<title>udpCom API documentation</title>
+<meta name="description" content="" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>udpCom</code></h1>
+</header>
+<section id="section-intro">
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">#!/usr/bin/python
+#-----------------------------------------------------------------------------
+# Name:        udpCom.py
+#
+# Purpose:     This module will provide a UDP client and server communication API.
+#
+# Author:      Yuancheng Liu
+#
+# Created:     2019/01/15
+# Copyright:   
+# License:     
+#-----------------------------------------------------------------------------
+import time
+import socket
+
+BUFFER_SZ = 4096    # TCP buffer size.
+RESP_TIME = 0.01
+
+#-----------------------------------------------------------------------------
+#-----------------------------------------------------------------------------
+class udpClient(object):
+    &#34;&#34;&#34; UDP client module.&#34;&#34;&#34;
+    def __init__(self, ipAddr):
+        &#34;&#34;&#34; Create an ipv4 (AF_INET) socket object using the udp protocol (SOCK_DGRAM)
+            init example: client = udpClient((&#39;127.0.0.1&#39;, 502))
+        &#34;&#34;&#34;
+        self.ipAddr = ipAddr
+        self.client = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+
+#--udpClient-------------------------------------------------------------------
+    def sendMsg(self, msg, resp=False, ipAddr=None):
+        &#34;&#34;&#34; Convert the msg to bytes and send it to UDP server. 
+            - resp: server response flag, method will wait server&#39;s response and 
+                return the bytes format response if it is set to True. 
+        &#34;&#34;&#34;
+        if not ipAddr is None: self.ipAddr = ipAddr  # reset ip address.
+        if self.client is None: return None # Check whether disconnected.
+        if not isinstance(msg, bytes): msg = str(msg).encode(&#39;utf-8&#39;)
+        self.client.sendto(msg, self.ipAddr)
+        if resp:
+            try:
+                self.client.settimeout(20)
+                data, _ = self.client.recvfrom(BUFFER_SZ)
+                return data
+            except ConnectionResetError as error:
+                print(&#34;udpClient: Can not connect to the server!&#34;)
+                print(error)
+                # self.disconnect() not need to diconnect if we want to do reconnect.
+                return None
+        return None
+
+#--udpClient-------------------------------------------------------------------
+    def disconnect(self):
+        &#34;&#34;&#34; Send a empty logout message and close the socket.&#34;&#34;&#34;
+        self.sendMsg(&#39;&#39;, resp=False)
+        time.sleep(RESP_TIME) # sleep very short while before close the socket to \
+        # make sure the server have enought time to handle the close method, when \
+        # server computer is fast, this is not a problem.
+
+        # Call shut down before close: https://docs.python.org/3/library/socket.html#socket.socket.shutdown
+        self.client.shutdown(socket.SHUT_RDWR)
+        self.client.close()
+        self.client = None
+#-----------------------------------------------------------------------------
+#-----------------------------------------------------------------------------
+class udpServer(object):
+    &#34;&#34;&#34; UDP server module.&#34;&#34;&#34;
+    def __init__(self, parent, port):
+        &#34;&#34;&#34; Create an ipv4 (AF_INET) socket object using the tcp protocol (SOCK_STREAM)
+            init example: server = udpServer(None, 5005)
+        &#34;&#34;&#34;
+        self.server = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        self.server.bind((&#39;0.0.0.0&#39;, port))
+        self.terminate = False  # Server terminate flag.
+
+#--udpServer-------------------------------------------------------------------
+    def serverStart(self, handler=None):
+        &#34;&#34;&#34; Start the UDP server to handle the incomming message.&#34;&#34;&#34;
+        while not self.terminate:
+            data, address = self.server.recvfrom(BUFFER_SZ)
+            print(&#34;Accepted connection from %s&#34; % str(address))
+            msg = handler(data) if not handler is None else data
+            if not msg is None:  # don&#39;t response client if the handler feed back is None
+                if not isinstance(msg, bytes): msg = str(msg).encode(&#39;utf-8&#39;)
+                self.server.sendto(msg, address)
+        self.server.close()
+
+#--udpServer-------------------------------------------------------------------
+    def serverStop(self):
+        self.terminate = True
+
+#-----------------------------------------------------------------------------
+#-----------------------------------------------------------------------------
+# Use case program: udpComTest.py
+
+def msgHandler(msg):
+    &#34;&#34;&#34; The test handler method passed into the UDP server to handle the 
+        incoming messages.
+    &#34;&#34;&#34;
+    print(&#34;Incomming message: %s&#34; % str(msg))
+    return msg
+
+def main():
+    &#34;&#34;&#34; Main function used for demo the module.&#34;&#34;&#34;
+    print(&#34;Run the module as a UDP (1) UDP echo server (2) UDP client: &#34;)
+    uInput = str(input())
+    if uInput == &#39;1&#39;:
+        print(&#34; - Please input the UDP port: &#34;)
+        udpPort = int(str(input()))
+        server = udpServer(None, udpPort)
+        print(&#34;Start the UDP echo server licening port [%s]&#34; % udpPort)
+        server.serverStart(handler=msgHandler)
+    elif uInput == &#39;2&#39;:
+        print(&#34; - Please input the IP address: &#34;)
+        ipAddr = str(input())
+        print(&#34; - Please input the UDP port: &#34;)
+        udpPort = int(str(input()))
+        client = udpClient((ipAddr, udpPort))
+        while True:
+            print(&#34; - Please input the message: &#34;)
+            msg = str(input())
+            resp = client.sendMsg(msg, resp=True)
+            print(&#34; - Server resp: %s&#34; % str(resp))
+    else:
+        print(&#34;Input %s is not valid, program terminate.&#34; % str(uInput))
+
+if __name__ == &#34;__main__&#34;:
+    main()</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="udpCom.main"><code class="name flex">
+<span>def <span class="ident">main</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Main function used for demo the module.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def main():
+    &#34;&#34;&#34; Main function used for demo the module.&#34;&#34;&#34;
+    print(&#34;Run the module as a UDP (1) UDP echo server (2) UDP client: &#34;)
+    uInput = str(input())
+    if uInput == &#39;1&#39;:
+        print(&#34; - Please input the UDP port: &#34;)
+        udpPort = int(str(input()))
+        server = udpServer(None, udpPort)
+        print(&#34;Start the UDP echo server licening port [%s]&#34; % udpPort)
+        server.serverStart(handler=msgHandler)
+    elif uInput == &#39;2&#39;:
+        print(&#34; - Please input the IP address: &#34;)
+        ipAddr = str(input())
+        print(&#34; - Please input the UDP port: &#34;)
+        udpPort = int(str(input()))
+        client = udpClient((ipAddr, udpPort))
+        while True:
+            print(&#34; - Please input the message: &#34;)
+            msg = str(input())
+            resp = client.sendMsg(msg, resp=True)
+            print(&#34; - Server resp: %s&#34; % str(resp))
+    else:
+        print(&#34;Input %s is not valid, program terminate.&#34; % str(uInput))</code></pre>
+</details>
+</dd>
+<dt id="udpCom.msgHandler"><code class="name flex">
+<span>def <span class="ident">msgHandler</span></span>(<span>msg)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>The test handler method passed into the UDP server to handle the
+incoming messages.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def msgHandler(msg):
+    &#34;&#34;&#34; The test handler method passed into the UDP server to handle the 
+        incoming messages.
+    &#34;&#34;&#34;
+    print(&#34;Incomming message: %s&#34; % str(msg))
+    return msg</code></pre>
+</details>
+</dd>
+</dl>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="udpCom.udpClient"><code class="flex name class">
+<span>class <span class="ident">udpClient</span></span>
+<span>(</span><span>ipAddr)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>UDP client module.</p>
+<p>Create an ipv4 (AF_INET) socket object using the udp protocol (SOCK_DGRAM)
+init example: client = udpClient(('127.0.0.1', 502))</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class udpClient(object):
+    &#34;&#34;&#34; UDP client module.&#34;&#34;&#34;
+    def __init__(self, ipAddr):
+        &#34;&#34;&#34; Create an ipv4 (AF_INET) socket object using the udp protocol (SOCK_DGRAM)
+            init example: client = udpClient((&#39;127.0.0.1&#39;, 502))
+        &#34;&#34;&#34;
+        self.ipAddr = ipAddr
+        self.client = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+
+#--udpClient-------------------------------------------------------------------
+    def sendMsg(self, msg, resp=False, ipAddr=None):
+        &#34;&#34;&#34; Convert the msg to bytes and send it to UDP server. 
+            - resp: server response flag, method will wait server&#39;s response and 
+                return the bytes format response if it is set to True. 
+        &#34;&#34;&#34;
+        if not ipAddr is None: self.ipAddr = ipAddr  # reset ip address.
+        if self.client is None: return None # Check whether disconnected.
+        if not isinstance(msg, bytes): msg = str(msg).encode(&#39;utf-8&#39;)
+        self.client.sendto(msg, self.ipAddr)
+        if resp:
+            try:
+                self.client.settimeout(20)
+                data, _ = self.client.recvfrom(BUFFER_SZ)
+                return data
+            except ConnectionResetError as error:
+                print(&#34;udpClient: Can not connect to the server!&#34;)
+                print(error)
+                # self.disconnect() not need to diconnect if we want to do reconnect.
+                return None
+        return None
+
+#--udpClient-------------------------------------------------------------------
+    def disconnect(self):
+        &#34;&#34;&#34; Send a empty logout message and close the socket.&#34;&#34;&#34;
+        self.sendMsg(&#39;&#39;, resp=False)
+        time.sleep(RESP_TIME) # sleep very short while before close the socket to \
+        # make sure the server have enought time to handle the close method, when \
+        # server computer is fast, this is not a problem.
+
+        # Call shut down before close: https://docs.python.org/3/library/socket.html#socket.socket.shutdown
+        self.client.shutdown(socket.SHUT_RDWR)
+        self.client.close()
+        self.client = None</code></pre>
+</details>
+<h3>Methods</h3>
+<dl>
+<dt id="udpCom.udpClient.disconnect"><code class="name flex">
+<span>def <span class="ident">disconnect</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Send a empty logout message and close the socket.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def disconnect(self):
+    &#34;&#34;&#34; Send a empty logout message and close the socket.&#34;&#34;&#34;
+    self.sendMsg(&#39;&#39;, resp=False)
+    time.sleep(RESP_TIME) # sleep very short while before close the socket to \
+    # make sure the server have enought time to handle the close method, when \
+    # server computer is fast, this is not a problem.
+
+    # Call shut down before close: https://docs.python.org/3/library/socket.html#socket.socket.shutdown
+    self.client.shutdown(socket.SHUT_RDWR)
+    self.client.close()
+    self.client = None</code></pre>
+</details>
+</dd>
+<dt id="udpCom.udpClient.sendMsg"><code class="name flex">
+<span>def <span class="ident">sendMsg</span></span>(<span>self, msg, resp=False, ipAddr=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Convert the msg to bytes and send it to UDP server.
+- resp: server response flag, method will wait server's response and
+return the bytes format response if it is set to True.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def sendMsg(self, msg, resp=False, ipAddr=None):
+    &#34;&#34;&#34; Convert the msg to bytes and send it to UDP server. 
+        - resp: server response flag, method will wait server&#39;s response and 
+            return the bytes format response if it is set to True. 
+    &#34;&#34;&#34;
+    if not ipAddr is None: self.ipAddr = ipAddr  # reset ip address.
+    if self.client is None: return None # Check whether disconnected.
+    if not isinstance(msg, bytes): msg = str(msg).encode(&#39;utf-8&#39;)
+    self.client.sendto(msg, self.ipAddr)
+    if resp:
+        try:
+            self.client.settimeout(20)
+            data, _ = self.client.recvfrom(BUFFER_SZ)
+            return data
+        except ConnectionResetError as error:
+            print(&#34;udpClient: Can not connect to the server!&#34;)
+            print(error)
+            # self.disconnect() not need to diconnect if we want to do reconnect.
+            return None
+    return None</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+<dt id="udpCom.udpServer"><code class="flex name class">
+<span>class <span class="ident">udpServer</span></span>
+<span>(</span><span>parent, port)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>UDP server module.</p>
+<p>Create an ipv4 (AF_INET) socket object using the tcp protocol (SOCK_STREAM)
+init example: server = udpServer(None, 5005)</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class udpServer(object):
+    &#34;&#34;&#34; UDP server module.&#34;&#34;&#34;
+    def __init__(self, parent, port):
+        &#34;&#34;&#34; Create an ipv4 (AF_INET) socket object using the tcp protocol (SOCK_STREAM)
+            init example: server = udpServer(None, 5005)
+        &#34;&#34;&#34;
+        self.server = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        self.server.bind((&#39;0.0.0.0&#39;, port))
+        self.terminate = False  # Server terminate flag.
+
+#--udpServer-------------------------------------------------------------------
+    def serverStart(self, handler=None):
+        &#34;&#34;&#34; Start the UDP server to handle the incomming message.&#34;&#34;&#34;
+        while not self.terminate:
+            data, address = self.server.recvfrom(BUFFER_SZ)
+            print(&#34;Accepted connection from %s&#34; % str(address))
+            msg = handler(data) if not handler is None else data
+            if not msg is None:  # don&#39;t response client if the handler feed back is None
+                if not isinstance(msg, bytes): msg = str(msg).encode(&#39;utf-8&#39;)
+                self.server.sendto(msg, address)
+        self.server.close()
+
+#--udpServer-------------------------------------------------------------------
+    def serverStop(self):
+        self.terminate = True</code></pre>
+</details>
+<h3>Methods</h3>
+<dl>
+<dt id="udpCom.udpServer.serverStart"><code class="name flex">
+<span>def <span class="ident">serverStart</span></span>(<span>self, handler=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Start the UDP server to handle the incomming message.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def serverStart(self, handler=None):
+    &#34;&#34;&#34; Start the UDP server to handle the incomming message.&#34;&#34;&#34;
+    while not self.terminate:
+        data, address = self.server.recvfrom(BUFFER_SZ)
+        print(&#34;Accepted connection from %s&#34; % str(address))
+        msg = handler(data) if not handler is None else data
+        if not msg is None:  # don&#39;t response client if the handler feed back is None
+            if not isinstance(msg, bytes): msg = str(msg).encode(&#39;utf-8&#39;)
+            self.server.sendto(msg, address)
+    self.server.close()</code></pre>
+</details>
+</dd>
+<dt id="udpCom.udpServer.serverStop"><code class="name flex">
+<span>def <span class="ident">serverStop</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def serverStop(self):
+    self.terminate = True</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="">
+<li><code><a title="udpCom.main" href="#udpCom.main">main</a></code></li>
+<li><code><a title="udpCom.msgHandler" href="#udpCom.msgHandler">msgHandler</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="udpCom.udpClient" href="#udpCom.udpClient">udpClient</a></code></h4>
+<ul class="">
+<li><code><a title="udpCom.udpClient.disconnect" href="#udpCom.udpClient.disconnect">disconnect</a></code></li>
+<li><code><a title="udpCom.udpClient.sendMsg" href="#udpCom.udpClient.sendMsg">sendMsg</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="udpCom.udpServer" href="#udpCom.udpServer">udpServer</a></code></h4>
+<ul class="">
+<li><code><a title="udpCom.udpServer.serverStart" href="#udpCom.udpServer.serverStart">serverStart</a></code></li>
+<li><code><a title="udpCom.udpServer.serverStop" href="#udpCom.udpServer.serverStop">serverStop</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.10.0</a>.</p>
+</footer>
+</body>
+</html>

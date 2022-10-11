@@ -40,6 +40,7 @@ def RanPasswdGenerate(pwdlength=8, upCase=True, loCase=True, digit=True, spChar=
     import string
     import random
     import secrets
+    pwdlength = max(4, pwdlength)
     charList = []
     # Add the required charactor
     if upCase:
