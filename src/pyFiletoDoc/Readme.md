@@ -1,7 +1,20 @@
 # How to convert a python(*.py) file or project to a html doc
 
-we can use 
+We can use the lib pdoc3 to convert the python file to doc: 
 
+Pdoc link: 
 
+https://github.com/pdoc3/pdoc
 
-We can use the lib pydoc3 to convert t
+Installation: 
+
+```
+$ pip install pdoc3
+```
+
+Usage:
+
+```
+pdoc --html example/dataManager.py
+```
+
