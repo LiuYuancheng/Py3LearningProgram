@@ -1,52 +1,58 @@
-# this module is use for testing the section 8.21 implement the visitor pattern
+# this module is use for testing the section 8.21 and 8.22 implement 
+# the visitor pattern
 
-class Node: 
+class Node:
     pass
-
-class UnaryOpertor(Node):
-    def __init__(self, operand) -> None:
-        super().__init__()
-        self.operand = operand
-
-class BinaryOperator(Node):
-    def __init__(self, left, right) -> None:
-        super().__init__()
-        self.left = left 
-        self.right = right
-
-class Add(BinaryOperator):
-    pass 
-
-class Sub(BinaryOperator):
-    pass 
-
-class Mul(BinaryOperator):
-    pass 
-
-class Div(BinaryOperator):
-    pass 
-
-class Negate(UnaryOpertor):
-    pass 
 
 class Number(Node):
     def __init__(self, value) -> None:
         super().__init__()
         self.value = value
 
+class BinaryOperator(Node):
+    def __init__(self, left, right) -> None:
+        super().__init__()
+        self.left = left
+        self.right = right
+
+class Add(BinaryOperator):
+    pass
+
+
+class Sub(BinaryOperator):
+    pass
+
+
+class Mul(BinaryOperator):
+    pass
+
+
+class Div(BinaryOperator):
+    pass
+
+class UnaryOpertor(Node):
+
+    def __init__(self, operand) -> None:
+        super().__init__()
+        self.operand = operand
+
+class Negate(UnaryOpertor):
+    pass
+
 class NodeVisitor:
+
     def visit(self, node):
-        methname = 'visit_' + type(node).__name__
-        meth = getattr(self, methname, None)
+        methname = 'visit' + type(node).__name__
+        meth = getattr(self, methname, None) # use this to ge the method name.
         if meth is None:
             meth = self.generic_visit
         return meth(node)
 
     def generic_visit(self, node):
-        raise RuntimeError('No {} method'.format('visit'+ type(node).__name__))
+        raise RuntimeError('No {} method'.format('visit' + type(node).__name__))
 
 class Evaluator(NodeVisitor):
-    
+
     def visitNumber(self, node):
         return node.value
 
@@ -55,12 +61,12 @@ class Evaluator(NodeVisitor):
 
     def visitSub(self, node):
         return self.visit(node.left) - self.visit(node.right)
-    
+
     def visitMul(self, node):
         return self.visit(node.left) * self.visit(node.right)
 
     def visitDiv(self, node):
-        return self.visit(self.left) / self.visit(node.right)
+        return self.visit(node.left) / self.visit(node.right)
 
     def visitNegate(self, node):
         return -node.operand
@@ -71,4 +77,46 @@ t3 = Div(t2, Number(5))
 t4 = Add(Number(1), t3)
 
 e = Evaluator()
-e.visit(t4)
+print(e.visit(t4))
+
+class StackCode(NodeVisitor):
+    def generate_code(self, node):
+        self.instructions = []
+        self.visit(node)
+        return self.instructions
+
+    def visitNumber(self, node):
+        self.instructions.append(('PUSH', node.value))
+
+    def binop(self, node, instructions):
+        self.visit(node.left)
+        self.visit(node.right)
+        self.instructions.append((instructions,))
+
+    def visitAdd(self, node):
+        self.binop(node, 'ADD')
+
+    def visitSub(self, node):
+        self.binop(node, 'SUB')
+
+    def visitMul(self, node):
+        self.binop(node, 'MUL')
+
+    def visitDiv(self, node):
+        self.binop(node, 'DIV')
+
+    def unaryop(self, node, instructions):
+        self.visit(node.operand)
+        self.instructions.append((instructions,))
+
+    def visitNegate(self, node):
+        self.unaryop(node, 'NEG')
+
+s = StackCode()
+print(s.generate_code(t4))
+print(s.visit(t4))
+
+
+
+
+
