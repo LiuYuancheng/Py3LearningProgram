@@ -1,5 +1,8 @@
 # this module is use for testing the section 8.21 and 8.22 implement 
 # the visitor pattern
+import types
+
+from numpy import isin
 
 class Node:
     pass
@@ -40,13 +43,30 @@ class Negate(UnaryOpertor):
     pass
 
 class NodeVisitor:
-
-    def visit(self, node):
+    
+    def _visit(self, node):
         methname = 'visit' + type(node).__name__
         meth = getattr(self, methname, None) # use this to ge the method name.
         if meth is None:
             meth = self.generic_visit
         return meth(node)
+
+    def visit(self, node):
+        stack = [node]
+        lastRst = None
+        while stack:
+            try:
+                last = stack[-1]
+                if isinstance(last, types.GeneratorType):
+                    stack.append(last.send(lastRst))
+                    lastRst = None
+                elif isinstance(last, Node):
+                    stack.append(self._visit(stack.pop()))
+                else:
+                    lastRst = stack.pop()
+            except StopIteration:
+                stack.pop()
+        return lastRst
 
     def generic_visit(self, node):
         raise RuntimeError('No {} method'.format('visit' + type(node).__name__))
