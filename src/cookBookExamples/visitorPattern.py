@@ -136,7 +136,48 @@ s = StackCode()
 print(s.generate_code(t4))
 print(s.visit(t4))
 
+a = Number(0)
 
+for n in range(1, 100000):
+    a = Add(a, Number(n))
 
+e = Evaluator()
+try:
+    rst = e.visit(a)
+    print(rst)
+except Exception as e:
+    print(f'Exception:{e}')
+
+class Evaluator2(NodeVisitor):
+
+    def visitNumber(self, node):
+        return node.value
+
+    def visitAdd(self, node):
+        yield (yield node.left) + (yield node.right)
+
+    def visitSub(self, node):
+        yield (yield node.left) - (yield node.right)
+
+    def visitMul(self, node):
+        yield (yield node.left) * (yield node.right)
+
+    def visitDiv(self, node):
+        yield (yield node.left) / (yield node.right)
+
+    def visitNegate(self, node):
+        return -node.operand 
+
+a = Number(0)
+
+for n in range(1, 100000):
+    a = Add(a, Number(n))
+
+e = Evaluator2()
+try:
+    rst = e.visit(a)
+    print(rst)
+except Exception as e:
+    print(f'Exception:{e}')
 
 
