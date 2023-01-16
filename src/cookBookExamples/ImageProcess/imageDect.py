@@ -17,12 +17,12 @@
 import cv2
 import numpy as np
 
-image= cv2.imread('1.png')
+image= cv2.imread('3_1.png')
 cv2.imshow('sreen short', image)
 cv2.waitKey(0)
 gray= cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 
-template= cv2.imread('3.png',0)
+template= cv2.imread('3_2.png',0)
 
 
 result= cv2.matchTemplate(gray, template, cv2.TM_CCOEFF)
@@ -41,12 +41,12 @@ font = cv2.FONT_HERSHEY_SIMPLEX
 org = (top_left[0], top_left[1]-10)
   
 # fontScale
-fontScale = 1
+fontScale = 0.7
 
 pos_XY = (int((top_left[0]+bottom_right[0])/2), int((top_left[1]+bottom_right[1])/2))
 
 image = cv2.putText(image, 'find match: at %s' %str(pos_XY), org, font, 
-                   fontScale, (0,0,255), 2, cv2.LINE_AA)
+                   fontScale, (0,0,255), 1, cv2.LINE_AA)
 
 cv2.imshow('find match', image)
 cv2.waitKey(0)
