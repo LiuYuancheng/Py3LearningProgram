@@ -13,9 +13,23 @@
 # License:     n.a
 #-----------------------------------------------------------------------------
 
-
 import cv2
 import numpy as np
+
+
+
+def findTemplate(source, template):
+    srcImg= cv2.imread(source)
+    srcGray= cv2.cvtColor(srcImg, cv2.COLOR_BGR2GRAY)
+    tmpImg= cv2.imread(template,0)
+    result= cv2.matchTemplate(srcGray, tmpImg, cv2.TM_CCOEFF)
+    min_val, max_val, min_loc, max_loc= cv2.minMaxLoc(result)
+    height, width= template.shape[:2]
+    top_left= max_loc
+    bottom_right= (top_left[0] + width, top_left[1] + height)
+    pos_XY = (int((top_left[0]+bottom_right[0])/2), int((top_left[1]+bottom_right[1])/2))
+    return pos_XY
+
 
 image= cv2.imread('3_1.png')
 cv2.imshow('sreen short', image)
