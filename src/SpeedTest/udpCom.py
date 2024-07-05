@@ -279,7 +279,7 @@ def main():
             print(" - Please input the message: ")
             msg = str(input())
             resp = client.sendMsg(msg, resp=True)
-            print(" - Server resp: %s" % str(resp))
+            print(" - Server resp: %s" % str(resp.decode('utf-8')))
     else:
         print("Input %s is not valid, program terminate." % str(uInput))
 
