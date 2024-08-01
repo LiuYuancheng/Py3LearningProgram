@@ -1,3 +1,4 @@
+import os
 import time
 import keyboard
 # change to use new webdriver-manager module : https://pypi.org/project/webdriver-manager/
@@ -11,10 +12,10 @@ from ConfigLoader import JsonLoader
 class webActor(object):
 
     def __init__(self, driverPath=None) -> None:
-        # dirpath = os.path.dirname(__file__)
-        # chromeDriverPath = driverPath if driverPath else os.path.join(dirpath, 'chromedriver.exe')
-        # self.driver = webdriver.Chrome(executable_path=chromeDriverPath)
-        self.driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()))
+        dirpath = os.path.dirname(__file__)
+        chromeDriverPath = driverPath if driverPath else os.path.join(dirpath, 'chromedriver.exe')
+        self.driver = webdriver.Chrome(executable_path=chromeDriverPath)
+        #self.driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()))
         self.startT = 0
 
     def openUrls(self, urlString):
